@@ -1,0 +1,8 @@
+{
+  "typeAcquisition": { "include": ["chrome"] },
+  "compilerOptions": {
+    "checkJs": true,
+    "lib": ["DOM", "ES6"],
+    "baseUrl": "."
+  }
+}

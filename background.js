@@ -1,6 +1,21 @@
-let color = "#3aa757";
+console.log("Background script running");
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-  console.log("Default background color set to %cgreen", `color: ${color}`);
+chrome.commands.onCommand.addListener((command) => {
+  console.log(`Command: ${command}`);
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const extensionID = sender.id;
+  const url = sender.url;
+  const tabIndex = sender.tab.index;
+  const tabId = sender.tab.id;
+
+  console.log(
+    `Received message from:\n\tExtension  ID:${extensionID}\n\tURL:${url}\n\tTab Index: ${tabIndex}`
+  );
+
+  console.log(message);
+  //   console.log(sender);
+  sendResponse("Received msg from background!");
+  chrome.tabs.sendMessage(tabId, "Message received from bg");
 });

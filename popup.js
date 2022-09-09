@@ -1,5 +1,21 @@
 let changeColor = document.getElementById("changeColor");
 
+// chrome.commands.onCommand.addEventListener((command) => {
+//   console.log(`Command: ${command}`);
+// });
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    func: contentScriptFunction,
+    args: ["action"],
+  });
+});
+
+function contentScriptFunction(name) {
+  alert(`"${name} executed`);
+}
+
 chrome.storage.sync.get("color", ({ color }) => {
   changeColor.style.backgroundColor = color;
 });

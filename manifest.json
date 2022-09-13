@@ -5,9 +5,13 @@
   "author": "Kobbi Gal",
   "version": "0.0.1",
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "permissions": ["activeTab", "scripting", "commands"],
+  "action": {
+    "default_title": "sact"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -17,8 +21,8 @@
   "commands": {
     "run-sact": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y"
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
       },
       "description": "Run \"sact\" on the current page."
     }

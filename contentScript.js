@@ -12,8 +12,6 @@ console.log(`Found ${links.length} links in ${window.location.href}`);
 
 const urls = filterUrls(links);
 
-console.log(`Found ${urls.length}`);
-
 // Iterate over all hyperlinks to retrieve their text and URL
 const linksTitle = [];
 for (var i = 0; i < urls.length; i++) {
@@ -25,10 +23,8 @@ for (var i = 0; i < urls.length; i++) {
   linksTitle.push(lt);
 }
 
-console.log(linksTitle[1]);
-
 // sends this to all bg and popup scripts in extension
-chrome.runtime.sendMessage(null, linksTitle[1], (response) => {
+chrome.runtime.sendMessage(null, linksTitle, (response) => {
   console.log(`sendResponse: ${response}`);
 });
 

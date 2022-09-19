@@ -1,0 +1,9 @@
+{
+  "typeAcquisition": { "include": ["chrome"] },
+  "compilerOptions": {
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["DOM", "ES6"]
+  }
+}

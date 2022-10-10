@@ -1,6 +1,8 @@
-import { SactDTO } from "../utils/sact-link";
+import SearchModal from "../components";
+import { SactElement } from "../utils/sact";
 
-console.log("Background script started");
+console.debug("Background script started");
+let e: SactElement[] = [];
 
 // START: INSTALLATION
 function checkCommandShortcuts() {
@@ -35,31 +37,24 @@ chrome.runtime.onInstalled.addListener((event) => {
 });
 // END: INSTALLATION
 
-let l: SactDTO = {
-  extensionId: "",
-  url: "",
-  tabIndex: 0,
-  tabId: 0,
-};
+// 1. Client sends list of anchors available in webpage
+chrome.runtime.onMessage.addListener(
+  (anchors: SactElement[], sender, sendResponse) => {
+    console.debug(`Message received from contentScript`);
 
+    chrome.action.setBadgeText({
+      text: `${anchors.length}`,
+      tabId: sender.tab.id,
+    });
+
+    e = anchors;
+
+    sendResponse("");
+  }
+);
+
+// 2. User runs hotkey
 chrome.commands.onCommand.addListener((command) => {
-  console.log(`${new Date().toDateString()} Command '${command}' ran`);
-
-  chrome.action.setBadgeText({
-    text: `${l.links.length}`,
-    tabId: l.tabId,
-  });
-});
-
-chrome.runtime.onMessage.addListener((links, sender, sendResponse) => {
-  l.extensionId = sender.id;
-  l.url = sender.url;
-  l.tabIndex = sender.tab.index;
-  l.tabId = sender.tab.id;
-  l.links = links;
-
-  console.log(`Message received from contentScript:`);
-  console.log(l);
-
-  sendResponse(`${new Date().toDateString()} Pong`);
+  console.debug(`Command '${command}' ran`);
+  console.debug(e);
 });

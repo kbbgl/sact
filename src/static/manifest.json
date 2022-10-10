@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "React Extension",
-  "description": "Chrome Extension in React!",
+  "name": "sact",
+  "description": "Web navigation without leaving the keyboard",
+  "author": "Kobbi Gal",
   "version": "1.0.0",
+  "permissions": ["activeTab", "scripting", "commands"],
   "icons": {
     "16": "icon.png",
     "48": "icon.png",
@@ -11,7 +13,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "React Extension",
+    "default_title": "Sact",
     "default_icon": { "16": "icon.png", "24": "icon.png", "32": "icon.png" }
   },
   "options_page": "options.html",
@@ -23,5 +25,14 @@
       "matches": ["<all_urls>"],
       "js": ["contentScript.js"]
     }
-  ]
+  ],
+  "commands": {
+    "run-sact": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Run \"sact\" on the current page."
+    }
+  }
 }

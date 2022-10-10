@@ -1,6 +1,6 @@
-# Chrome Extension React/TypeScript Boilerplate
+# `sact`
 
-This repository includes a boilerplate project for a Chrome Extension using ReactJS and TypeScript.
+## Search and Act
 
 ## Installation
 

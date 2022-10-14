@@ -4,13 +4,15 @@ export interface SactElement {
   href: string;
 }
 
-// export interface SactDTO {
-//   extensionId: string;
-//   url: string;
-//   tabIndex: number;
-//   tabId: number;
-//   links?: SactElement[];
-// }
+export enum SactMessageType {
+  ACTIVATE,
+  UPDATE_BADGE_LINKS_FOUND,
+}
+
+export interface SactMessage {
+  type: SactMessageType;
+  content: string;
+}
 
 export function getFilteredAnchorElements(
   anchors: HTMLAnchorElement[]

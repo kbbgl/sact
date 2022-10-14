@@ -3,7 +3,8 @@
   "name": "sact",
   "description": "Web navigation without leaving the keyboard",
   "author": "Kobbi Gal",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "version_name": "beta",
   "permissions": ["activeTab", "scripting", "commands"],
   "icons": {
     "16": "icon.png",

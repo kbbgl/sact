@@ -1,5 +1,4 @@
-import SearchModal from "../components";
-import { SactElement } from "../utils/sact";
+import { SactElement, SactMessage, SactMessageType } from "../utils/sact";
 
 console.debug("Background script started");
 let e: SactElement[] = [];
@@ -38,23 +37,33 @@ chrome.runtime.onInstalled.addListener((event) => {
 // END: INSTALLATION
 
 // 1. Client sends list of anchors available in webpage
-chrome.runtime.onMessage.addListener(
-  (anchors: SactElement[], sender, sendResponse) => {
-    console.debug(`Message received from contentScript`);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.debug(`Message received from contentScript`);
+  console.log(message);
 
+  if (message.type === SactMessageType.UPDATE_BADGE_LINKS_FOUND) {
     chrome.action.setBadgeText({
-      text: `${anchors.length}`,
+      text: `${message.content}`,
       tabId: sender.tab.id,
     });
 
-    e = anchors;
-
-    sendResponse("");
+    sendResponse("Badge updated");
   }
-);
+});
 
 // 2. User runs hotkey
 chrome.commands.onCommand.addListener((command) => {
   console.debug(`Command '${command}' ran`);
-  console.debug(e);
+
+  const message: SactMessage = {
+    type: SactMessageType.ACTIVATE,
+    content: "Activate",
+  };
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
+      console.log(response);
+      return true;
+    });
+  });
 });

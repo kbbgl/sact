@@ -4,8 +4,6 @@ function onSearch() {
   let input, filter, ul, li, a, i, txtValue;
   input = document.getElementById("sact-search-bar");
   filter = input.value.toUpperCase();
-
-  console.log(filter);
 }
 
 export function createSearchBar(links: SactElement[]): HTMLInputElement {

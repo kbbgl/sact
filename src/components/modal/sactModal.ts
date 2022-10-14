@@ -1,5 +1,6 @@
 import { SactElement } from "../../utils/sact";
 import "./sactModal.css";
+import { createLinkList } from "./searchbar/linkList";
 import { createSearchBar } from "./searchbar/searchBar";
 
 export function createModal(sactElements: SactElement[]): HTMLDivElement {
@@ -8,11 +9,13 @@ export function createModal(sactElements: SactElement[]): HTMLDivElement {
   modalClose.innerText = "X";
 
   const modalSearchBar = createSearchBar(sactElements);
+  const searchElements = createLinkList(sactElements);
 
   const modalContent = document.createElement("div");
   modalContent.className = "modal-content";
   modalContent.appendChild(modalClose);
   modalContent.appendChild(modalSearchBar);
+  modalContent.appendChild(searchElements);
 
   const modal = document.createElement("div");
   modal.id = "sact-modal";

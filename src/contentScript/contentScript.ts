@@ -1,3 +1,4 @@
+import { createModal } from "../components/modal/sactModal";
 import {
   getFilteredAnchorElements,
   SactMessage,
@@ -28,10 +29,20 @@ chrome.runtime.sendMessage(null, message, (res) => {
 // Listeners
 chrome.runtime.onMessage.addListener(
   (message: SactMessage, sender, sendResponse) => {
-    console.log("Message received");
+    console.log(`Message received`);
 
     if (message.type === SactMessageType.ACTIVATE) {
       console.log("Activate sact");
+
+      const modal = createModal(sactElements);
+      document.body.appendChild(modal);
+
+      window.onclick = (event) => {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
       sendResponse("Activation completed");
     }
   }

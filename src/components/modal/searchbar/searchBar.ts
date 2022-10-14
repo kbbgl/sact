@@ -1,4 +1,5 @@
 import { SactElement } from "../../../utils/sact";
+import "./searchBar.css";
 
 function onSearch() {
   let input, filter, ul, li, a, i, txtValue;
@@ -9,7 +10,7 @@ function onSearch() {
 export function createSearchBar(links: SactElement[]): HTMLInputElement {
   const modalSearchBar = document.createElement("input");
   modalSearchBar.type = "search";
-  modalSearchBar.placeholder = "Search for links in page";
+  modalSearchBar.placeholder = `Found ${links.length} links in the page, let's search them!`;
   modalSearchBar.id = "sact-search-bar";
   modalSearchBar.onkeyup = onSearch;
 

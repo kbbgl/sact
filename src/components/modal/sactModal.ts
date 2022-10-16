@@ -1,21 +1,56 @@
 import { SactElement } from "../../utils/sact";
+import { SactLinkList } from "./list/linkList";
 import "./sactModal.css";
-import { createLinkList } from "./list/linkList";
-import { createSearchBar } from "./searchbar/searchBar";
+import { SactSearchBar } from "./searchbar/searchBar";
 
-export function createModal(sactElements: SactElement[]): HTMLDivElement {
-  const modalSearchBar = createSearchBar(sactElements);
-  const searchElements = createLinkList(sactElements);
+export class SactModal extends HTMLDivElement {
+  private static instance: SactModal;
 
-  const modalContent = document.createElement("div");
-  modalContent.className = "modal-content";
-  modalContent.appendChild(modalSearchBar);
-  // modalContent.appendChild(searchElements);
+  searchBar: SactSearchBar;
+  linkList: SactLinkList;
 
-  const modal = document.createElement("div");
-  modal.id = "sact-modal";
-  modal.className = "modal";
-  modal.appendChild(modalContent);
+  constructor() {
+    super();
+    this.id = "sact-modal";
+    this.className = "modal";
+  }
 
-  return modal;
+  public static getInstance(): SactModal {
+    if (!SactModal.instance) {
+      SactModal.instance = new SactModal();
+    }
+
+    return SactModal.instance;
+  }
+
+  public setSearchBar(searchBar: SactSearchBar): void {
+    this.appendChild(searchBar);
+  }
+
+  public getSearchBar(): SactSearchBar {
+    return this.searchBar;
+  }
+
+  public setLinkList(linkList: SactLinkList): void {
+    this.appendChild(linkList);
+  }
+
+  public getLinkList(): SactLinkList {
+    return this.linkList;
+  }
+
+  public static createModal(sactElements: SactElement[]): HTMLDivElement {
+    const modalSearchBar = SactSearchBar.createSearchBar(sactElements);
+
+    const modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+    modalContent.appendChild(modalSearchBar);
+
+    const modal = document.createElement("div");
+    modal.id = "sact-modal";
+    modal.className = "modal";
+    modal.appendChild(modalContent);
+
+    return modal;
+  }
 }

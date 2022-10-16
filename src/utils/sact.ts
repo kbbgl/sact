@@ -5,8 +5,9 @@ export interface SactElement {
 }
 
 export enum SactMessageType {
-  ACTIVATE,
-  UPDATE_BADGE_LINKS_FOUND,
+  SHOW_MODAL,
+  UPDATE_BADGE,
+  UPDATE_BADGE_COMPLETE,
 }
 
 export interface SactMessage {

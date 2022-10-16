@@ -36,27 +36,38 @@ chrome.runtime.onInstalled.addListener((event) => {
 });
 // END: INSTALLATION
 
-// 1. Client sends list of anchors available in webpage
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.debug(`Message received from contentScript`);
-  console.log(message);
+chrome.runtime.onMessage.addListener(
+  (message: SactMessage, sender, sendResponse) => {
+    console.debug(`Message received from ${sender.url}`);
+    console.log(message);
 
-  if (message.type === SactMessageType.UPDATE_BADGE_LINKS_FOUND) {
-    chrome.action.setBadgeText({
-      text: `${message.content}`,
-      tabId: sender.tab.id,
-    });
+    switch (message.type) {
+      case SactMessageType.UPDATE_BADGE:
+        chrome.action.setBadgeText({
+          text: `${message.content}`,
+          tabId: sender.tab.id,
+        });
 
-    sendResponse("Badge updated");
+        const response: SactMessage = {
+          type: SactMessageType.UPDATE_BADGE_COMPLETE,
+          content: `Badge updated to ${message.content}`,
+        };
+        sendResponse(response);
+
+        break;
+
+      default:
+        break;
+    }
   }
-});
+);
 
 // 2. User runs hotkey
 chrome.commands.onCommand.addListener((command) => {
   console.debug(`Command '${command}' ran`);
 
   const message: SactMessage = {
-    type: SactMessageType.ACTIVATE,
+    type: SactMessageType.SHOW_MODAL,
     content: "Activate",
   };
 

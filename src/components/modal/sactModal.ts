@@ -1,7 +1,7 @@
 import { SactElement } from "../../utils/sact";
-import { SactLinkList } from "./list/linkList";
+import { SactLinkList } from "./content/list/linkList";
 import "./sactModal.css";
-import { SactSearchBar } from "./searchbar/searchBar";
+import { SactSearchBar } from "./content/searchbar/searchBar";
 
 export class SactModal extends HTMLDivElement {
   private static instance: SactModal;

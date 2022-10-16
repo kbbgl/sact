@@ -15,4 +15,10 @@
     /* Add a grey border */
     margin-bottom: 12px;
     /* Add some space below the input */
+    background-color: black;
+    color: aliceblue;
+}
+
+::placeholder {
+    color: white
 }

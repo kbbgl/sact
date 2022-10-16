@@ -1,5 +1,5 @@
-import { SactElement } from "../../../utils/sact";
-import { SactLinkList } from "../list/linkList";
+import { SactElement } from "../../../../utils/sact";
+import { SactLinkList } from "../../content/list/linkList";
 import "./searchBar.css";
 
 export class SactSearchBar extends HTMLInputElement {
@@ -46,9 +46,6 @@ export class SactSearchBar extends HTMLInputElement {
     modalSearchBar.onkeyup = () => {
       let input = modalSearchBar.value.toLowerCase();
       if (input) {
-        // Remove all links
-        // document.getElementById("sact-modal").outerHTML = "";
-
         let linkElements: SactElement[] = [];
         links.forEach((link) => {
           if (link.text.toLowerCase().includes(input)) {
@@ -56,7 +53,8 @@ export class SactSearchBar extends HTMLInputElement {
           }
         });
         console.log(
-          `Search term '${input}' found ${linkElements.length} links`
+          `Search term '${input}' found ${linkElements.length} links`,
+          linkElements
         );
 
         let linkElementsDisplay = SactLinkList.createLinkList(linkElements);

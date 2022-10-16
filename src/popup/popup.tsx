@@ -5,6 +5,7 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   return (
     <div>
+      <h2>Under construction...</h2>
       <img src="icon.png"></img>
     </div>
   );

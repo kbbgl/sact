@@ -48,6 +48,11 @@ chrome.runtime.onMessage.addListener(
           tabId: sender.tab.id,
         });
 
+        chrome.action.setBadgeBackgroundColor({
+          color: "#2b31bf",
+          tabId: sender.tab.id,
+        });
+
         const response: SactMessage = {
           type: SactMessageType.UPDATE_BADGE_COMPLETE,
           content: `Badge updated to ${message.content}`,

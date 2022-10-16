@@ -1,5 +1,10 @@
 body {
     width: 400px;
     height: 400px;
-    background-color: brown;
+    background: radial-gradient(circle, rgba(2, 0, 36, 1) 10%, rgba(107, 107, 129, 1) 39%, rgba(43, 49, 191, 1) 100%);
+    text-align: center
+}
+
+h2 {
+    color: lavender;
 }

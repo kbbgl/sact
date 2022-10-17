@@ -18,9 +18,25 @@ export interface SactMessage {
 export function getFilteredAnchorElements(
   anchors: HTMLAnchorElement[]
 ): SactElement[] {
+  console.debug(
+    `Anchors fed into 'getFilteredAnchorElements': ${anchors.length}`
+  );
   let filtered = anchors.filter(
     (anchor) => anchor.href !== "javascript:void(0)" && anchor.innerText
   );
+  console.debug(
+    `Anchors after filtering of empty and void href: ${filtered.length}`
+  );
+
+  filtered = filtered.filter(
+    (anchor, index, self) =>
+      index ===
+      self.findIndex(
+        (a) => a.innerText === anchor.innerText && a.href === anchor.href
+      )
+  );
+
+  console.debug(`Anchors after filtering duplicates: ${filtered.length}`);
 
   let elements: SactElement[] = [];
   filtered.forEach((element) => {

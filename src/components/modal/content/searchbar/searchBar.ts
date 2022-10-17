@@ -42,9 +42,12 @@ export class SactSearchBar extends HTMLInputElement {
     modalSearchBar.type = "search";
     modalSearchBar.placeholder = `Found ${links.length} links in the page, let's search them!`;
     modalSearchBar.id = "sact-search-bar";
-    // @ts-ignore
     modalSearchBar.setAttribute("list", "sact-search-bar-list");
+    const searchBarAutomcompleteList: HTMLDataListElement =
+      SactSearchBar.createAutocompleteList(links);
+    modalSearchBar.appendChild(searchBarAutomcompleteList);
 
+    // When value is entered into search input
     modalSearchBar.onkeyup = () => {
       let input = modalSearchBar.value.toLowerCase();
       if (input) {
@@ -59,11 +62,9 @@ export class SactSearchBar extends HTMLInputElement {
           linkElements
         );
 
-        // let linkElementsDisplay = SactLinkList.createLinkList(linkElements);
         const searchBarAutomcompleteList: HTMLDataListElement =
           SactSearchBar.createAutocompleteList(linkElements);
         modalSearchBar.appendChild(searchBarAutomcompleteList);
-        // document.getElementById("sact-modal").appendChild(linkElementsDisplay);
       }
 
       return;
@@ -78,7 +79,8 @@ export class SactSearchBar extends HTMLInputElement {
 
     elements.forEach((element) => {
       let dlElement: HTMLOptionElement = document.createElement("option");
-      dlElement.value = element.text;
+      dlElement.innerText = `${element.text}`;
+
       datalist.appendChild(dlElement);
     });
 

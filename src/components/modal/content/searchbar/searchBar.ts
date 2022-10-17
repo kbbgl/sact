@@ -38,10 +38,12 @@ export class SactSearchBar extends HTMLInputElement {
   }
 
   public static createSearchBar(links: SactElement[]): HTMLInputElement {
-    const modalSearchBar = document.createElement("input");
+    const modalSearchBar: HTMLInputElement = document.createElement("input");
     modalSearchBar.type = "search";
     modalSearchBar.placeholder = `Found ${links.length} links in the page, let's search them!`;
     modalSearchBar.id = "sact-search-bar";
+    // @ts-ignore
+    modalSearchBar.setAttribute("list", "sact-search-bar-list");
 
     modalSearchBar.onkeyup = () => {
       let input = modalSearchBar.value.toLowerCase();
@@ -57,7 +59,10 @@ export class SactSearchBar extends HTMLInputElement {
           linkElements
         );
 
-        let linkElementsDisplay = SactLinkList.createLinkList(linkElements);
+        // let linkElementsDisplay = SactLinkList.createLinkList(linkElements);
+        const searchBarAutomcompleteList: HTMLDataListElement =
+          SactSearchBar.createAutocompleteList(linkElements);
+        modalSearchBar.appendChild(searchBarAutomcompleteList);
         // document.getElementById("sact-modal").appendChild(linkElementsDisplay);
       }
 
@@ -65,5 +70,18 @@ export class SactSearchBar extends HTMLInputElement {
     };
 
     return modalSearchBar;
+  }
+
+  static createAutocompleteList(elements: SactElement[]): HTMLDataListElement {
+    let datalist: HTMLDataListElement = document.createElement("datalist");
+    datalist.id = "sact-search-bar-list";
+
+    elements.forEach((element) => {
+      let dlElement: HTMLOptionElement = document.createElement("option");
+      dlElement.value = element.text;
+      datalist.appendChild(dlElement);
+    });
+
+    return datalist;
   }
 }

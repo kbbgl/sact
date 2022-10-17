@@ -33,3 +33,11 @@ npm start
 After building, the assets will be found in the `dist` folder.
 
 Load the extension from the browser in address `chrome://extensions` > Load unpacked > Select `dist` folder.
+
+Make sure to go to `chrome://extensions/shortcuts` and verify that:
+
+```plaintext
+Run "sact" on the current page: Ctrl + Shift + K In Chrome
+```
+
+![shortcuts](shortcuts.png)

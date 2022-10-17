@@ -91,6 +91,10 @@ export class SactSearchBar extends HTMLInputElement {
     elements.forEach((element) => {
       let dlElement: HTMLOptionElement = document.createElement("option");
       dlElement.innerText = `${element.text}`;
+      dlElement.label = `${element.href}`;
+      dlElement.onfocus = (event) => {
+        console.log(`onfocus: ${event}`);
+      };
 
       datalist.appendChild(dlElement);
     });

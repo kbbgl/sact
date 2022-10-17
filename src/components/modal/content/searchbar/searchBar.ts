@@ -70,6 +70,15 @@ export class SactSearchBar extends HTMLInputElement {
       return;
     };
 
+    modalSearchBar.onchange = () => {
+      console.log(`Selected value '${modalSearchBar.value}'`);
+      const redirectionLink: string = links.find(
+        (link) => link.text === modalSearchBar.value
+      ).text;
+      window.location.href = redirectionLink;
+      return;
+    };
+
     return modalSearchBar;
   }
 

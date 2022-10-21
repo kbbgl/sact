@@ -78,13 +78,14 @@ export class SactSearchBar extends HTMLInputElement {
 
     // When search bar item is selected, redirect user to selected URL
     modalSearchBar.onchange = () => {
-      console.debug(`Selected value '${modalSearchBar.value}'`);
-
-      const redirectionLink: string = links.find(
-        (link) => link.text === modalSearchBar.value
-      ).href;
-      console.debug(`Redirecting to ${redirectionLink}...`);
-      window.location.href = redirectionLink;
+      if (modalSearchBar.value) {
+        console.debug(`Selected value '${modalSearchBar.value}'`);
+        const redirectionLink: string = links.find(
+          (link) => link.text === modalSearchBar.value
+        ).href;
+        console.debug(`Redirecting to ${redirectionLink}...`);
+        window.location.href = redirectionLink;
+      }
 
       // TODO find element
       // const as = Array.from(document.getElementsByTagName("a"));

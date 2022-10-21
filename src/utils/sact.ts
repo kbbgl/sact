@@ -1,5 +1,4 @@
 export interface SactElement {
-  id: string;
   text: string;
   href: string;
 }
@@ -10,9 +9,18 @@ export enum SactMessageType {
   UPDATE_BADGE_COMPLETE,
 }
 
+export enum SactMessageSender {
+  BACKGROUND,
+  CONTENT_SCRIPT,
+  POPUP,
+  OPTIONS,
+}
+
 export interface SactMessage {
   type: SactMessageType;
   content: string;
+  destination: SactMessageSender;
+  source: SactMessageSender;
 }
 
 export function getFilteredAnchorElements(
@@ -42,8 +50,7 @@ export function getFilteredAnchorElements(
   filtered.forEach((element) => {
     let e: SactElement = {
       href: element.href,
-      id: element.id,
-      text: element.innerText,
+      text: element.title ? element.title : element.innerText,
     };
 
     elements.push(e);

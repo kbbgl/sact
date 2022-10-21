@@ -2,6 +2,7 @@ import { SactModal } from "../components/modal/sactModal";
 import {
   getFilteredAnchorElements,
   SactMessage,
+  SactMessageSender,
   SactMessageType,
 } from "../utils/sact";
 
@@ -23,6 +24,8 @@ console.log("Sending message to update badge with link count...");
 const message: SactMessage = {
   content: `${sactElements.length}`,
   type: SactMessageType.UPDATE_BADGE,
+  source: SactMessageSender.CONTENT_SCRIPT,
+  destination: SactMessageSender.BACKGROUND,
 };
 chrome.runtime.sendMessage(null, message, (res: SactMessage) => {
   switch (res.type) {

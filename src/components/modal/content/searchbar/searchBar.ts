@@ -43,9 +43,9 @@ export class SactSearchBar extends HTMLInputElement {
     modalSearchBar.placeholder = `Found ${links.length} links in the page, let's search them!`;
     modalSearchBar.id = "sact-search-bar";
     modalSearchBar.setAttribute("list", "sact-search-bar-list");
-    const searchBarAutomcompleteList: HTMLDataListElement =
-      SactSearchBar.createAutocompleteList(links);
-    modalSearchBar.appendChild(searchBarAutomcompleteList);
+    // const searchBarAutomcompleteList: HTMLDataListElement =
+    //   SactSearchBar.createAutocompleteList(links);
+    // modalSearchBar.appendChild(searchBarAutomcompleteList);
 
     // When value is entered into search input
     modalSearchBar.onkeyup = () => {
@@ -62,6 +62,12 @@ export class SactSearchBar extends HTMLInputElement {
           linkElements
         );
 
+        if (modalSearchBar.hasChildNodes()) {
+          modalSearchBar.removeChild(
+            document.getElementsByTagName("datalist")[0]
+          );
+        }
+
         const searchBarAutomcompleteList: HTMLDataListElement =
           SactSearchBar.createAutocompleteList(linkElements);
         modalSearchBar.appendChild(searchBarAutomcompleteList);
@@ -73,12 +79,42 @@ export class SactSearchBar extends HTMLInputElement {
     // When search bar item is selected, redirect user to selected URL
     modalSearchBar.onchange = () => {
       console.debug(`Selected value '${modalSearchBar.value}'`);
+
       const redirectionLink: string = links.find(
         (link) => link.text === modalSearchBar.value
       ).href;
       console.debug(`Redirecting to ${redirectionLink}...`);
       window.location.href = redirectionLink;
+
+      // TODO find element
+      // const as = Array.from(document.getElementsByTagName("a"));
+      // as.forEach((a) => {
+      //   if (a.innerText.toLowerCase() === modalSearchBar.value.toLowerCase()) {
+      //     console.log(`found matching element to scroll to: ${a}`);
+
+      //     a.scrollIntoView({
+      //       behavior: "smooth",
+      //       block: "nearest",
+      //       inline: "center",
+      //     });
+      //   }
+      // });
+
+      // const element = document.querySelector(
+      //   `a[text="${modalSearchBar.value}"]`
+      // );
+      // console.log(`[text="${modalSearchBar.value}"]`);
+
+      // matchingElement.scrollIntoView({
+      //   behavior: "smooth",
+      //   block: "center",
+      // });
+
       return;
+    };
+
+    modalSearchBar.oninput = (event) => {
+      console.debug(`oninput.event:`, event);
     };
 
     return modalSearchBar;
@@ -90,7 +126,6 @@ export class SactSearchBar extends HTMLInputElement {
 
     elements.forEach((element) => {
       let dlElement: HTMLOptionElement = document.createElement("option");
-      // dlElement.innerHTML = `<b>&rarr; ${element.text}</b>`;
       dlElement.innerText = `${element.text}`;
       dlElement.label = `${element.href}`;
       dlElement.onfocus = (event) => {

@@ -1,4 +1,9 @@
-import { SactElement, SactMessage, SactMessageType } from "../utils/sact";
+import {
+  SactElement,
+  SactMessage,
+  SactMessageSender,
+  SactMessageType,
+} from "../utils/sact";
 
 console.debug("Background script started");
 let e: SactElement[] = [];
@@ -56,6 +61,8 @@ chrome.runtime.onMessage.addListener(
         const response: SactMessage = {
           type: SactMessageType.UPDATE_BADGE_COMPLETE,
           content: `Badge updated to ${message.content}`,
+          source: SactMessageSender.BACKGROUND,
+          destination: SactMessageSender.CONTENT_SCRIPT,
         };
         sendResponse(response);
 
@@ -74,6 +81,8 @@ chrome.commands.onCommand.addListener((command) => {
   const message: SactMessage = {
     type: SactMessageType.SHOW_MODAL,
     content: "Activate",
+    source: SactMessageSender.BACKGROUND,
+    destination: SactMessageSender.CONTENT_SCRIPT,
   };
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
